@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.video-container video {
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.container {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 400px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.input-container {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+#task-input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem 0 0 0.25rem;
+  outline: none;
+}
+
+#add-task {
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0.25rem 0.25rem 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#add-task:hover {
+  background-color: #45a049;
+}
+
+#task-list {
+  list-style: none;
+  padding: 0;
+}
+
+#task-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background-color: #f9f9f9;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+#task-list li.completed {
+  text-decoration: line-through;
+  color: #999;
+}
+
+#task-list li .actions {
+  display: flex;
+}
+
+#task-list li .actions button {
+  background-color: transparent;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+#task-list li .actions button:hover {
+  color: #666;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+
+    <div class="video-container">
+        <video autoplay loop muted>
+          <source src="Tech Background on Motion Graphics - Copyright Free Video - Green Screen.mp4" type="video/mp4">
+        </video>
+      </div>
+  <div class="container">
+    <h1>To-Do List</h1>
+    <div class="input-container">
+      <input type="text" id="task-input" placeholder="Enter a task...">
+      <button id="add-task"><i class="fas fa-plus"></i></button>
+    </div>
+    <ul id="task-list"></ul>
+  </div>
+
+  <script>
+    const taskInput = document.getElementById('task-input');
+const addTaskBtn = document.getElementById('add-task');
+const taskList = document.getElementById('task-list');
+
+addTaskBtn.addEventListener('click', addTask);
+taskInput.addEventListener('keyup', (e) => {
+  if (e.key === 'Enter') {
+    addTask();
+  }
+});
+
+function addTask() {
+  const taskText = taskInput.value.trim();
+  if (taskText) {
+    const taskItem = document.createElement('li');
+    const taskLabel = document.createElement('span');
+    const actionsContainer = document.createElement('div');
+    const completeBtn = document.createElement('button');
+    const deleteBtn = document.createElement('button');
+
+    taskLabel.textContent = taskText;
+    completeBtn.innerHTML = '<i class="fas fa-check"></i>';
+    deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+
+    actionsContainer.classList.add('actions');
+    completeBtn.classList.add('complete-btn');
+    deleteBtn.classList.add('delete-btn');
+
+    actionsContainer.appendChild(completeBtn);
+    actionsContainer.appendChild(deleteBtn);
+    taskItem.appendChild(taskLabel);
+    taskItem.appendChild(actionsContainer);
+    taskList.appendChild(taskItem);
+
+    taskInput.value = '';
+
+    completeBtn.addEventListener('click', () => {
+      taskItem.classList.toggle('completed');
+    });
+
+    deleteBtn.addEventListener('click', () => {
+      taskList.removeChild(taskItem);
+    });
+  }
+}
+  </script>
+</body>
+</html>
